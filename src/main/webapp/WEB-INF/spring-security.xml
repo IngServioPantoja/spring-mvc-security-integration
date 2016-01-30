@@ -1,0 +1,30 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/private/*" access="hasRole('ROLE_ADMIN')" />
+
+		<security:custom-filter after="SECURITY_CONTEXT_FILTER" ref="hdivFilter" />
+		<!-- access denied page -->
+		<security:access-denied-handler error-page="/403" />
+		<security:form-login login-page="/" login-processing-url="/j_spring_security_check" default-target-url="/private/personas"
+			authentication-failure-url="/" username-parameter="username"
+			password-parameter="password" />
+		<security:logout logout-success-url="/login?logout" />
+		<!-- enable csrf protection -->
+	</security:http>
+	
+	<bean id="hdivFilter" class="org.hdiv.filter.ValidatorFilter" />
+
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="usuarioServiceImpl">
+			<security:password-encoder hash="sha-256" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>

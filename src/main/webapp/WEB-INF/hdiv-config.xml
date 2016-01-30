@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hdiv="http://www.hdiv.org/schema/hdiv"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.hdiv.org/schema/hdiv http://www.hdiv.org/schema/hdiv/hdiv.xsd">
+
+	<hdiv:config excludedExtensions="css,png,js" >
+		<hdiv:sessionExpired loginPage="/login" homePage="/"/>
+		<hdiv:startPages method="get">/,/login,/j_spring_security_logout</hdiv:startPages>
+		<hdiv:startPages method="post">/j_spring_security_check</hdiv:startPages>
+		<hdiv:startParameters>_csrf</hdiv:startParameters>
+	</hdiv:config>
+
+	<!-- Accepted pattern within the application for all editable parameters (generated from textbox and textarea) -->
+	<hdiv:validation id="safeText">
+		<hdiv:acceptedPattern><![CDATA[^[a-zA-Z0-9@.\-_]*$]]></hdiv:acceptedPattern>
+	</hdiv:validation>
+
+	<!-- Finally, it's necessary to define editable data validation list for 
+		the application -->
+	<hdiv:editableValidations>
+		<hdiv:validationRule url="/private/personas/.*" parameters="detallePersona,idPersona"></hdiv:validationRule>
+		<hdiv:validationRule url="/safetext/.*"	enableDefaults="false">safeText</hdiv:validationRule>
+	</hdiv:editableValidations>
+
+</beans>

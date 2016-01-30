@@ -18,7 +18,7 @@
 					href="javascript:formSubmit()"> Logout</a>
 			</h2>
 		</c:if>
-	<header class="bg-primary">Sistema de gestión de alumnos</header>
+	<header class="bg-primary">Sistema de gestión de alumnos - Automatización de pruebas y deployment desde Jenkins con GitHub</header>
 	Login
 	<div class="contenedorLogin">
 		<div class="panel panel-primary">
